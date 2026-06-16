@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hania Amjad — Computer Engineering Student</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #08090f;
+    --bg2:       #0d0f1c;
+    --card:      #111326;
+    --border:    rgba(175,144,244,0.18);
+    --purple:    #AF90F4;
+    --cyan:      #63e8ff;
+    --pink:      #f472b6;
+    --text:      #e8eaf2;
+    --muted:     #7b80a0;
+    --mono:      'Share Tech Mono', monospace;
+    --display:   'Syne', sans-serif;
+    --body:      'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(175,144,244,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(175,144,244,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* ── GLOWING ORBS ── */
+  .orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(90px); opacity: 0.25;
+    pointer-events: none; z-index: 0;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--purple); top: -150px; left: -150px; }
+  .orb-2 { width: 400px; height: 400px; background: var(--cyan);   bottom: -100px; right: -100px; }
+  .orb-3 { width: 300px; height: 300px; background: var(--pink);   top: 40%; left: 50%; opacity: 0.12; }
+
+  /* ── WRAPPER ── */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── HERO ── */
+  header {
+    padding: 80px 0 60px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tag::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--cyan);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 30%, var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .headline {
+    font-family: var(--display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--purple);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  .contact-bar {
+    display: flex; flex-direction: column; gap: 7px;
+    align-items: flex-end;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .contact-bar a { color: var(--cyan); text-decoration: none; transition: color .2s; }
+  .contact-bar a:hover { color: #fff; }
+
+  .badge-row {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: rgba(255,255,255,0.03);
+    letter-spacing: 0.06em;
+  }
+  .badge.lit {
+    border-color: var(--purple);
+    color: var(--purple);
+    background: rgba(175,144,244,0.07);
+  }
+
+  /* ── TERMINAL TICKER ── */
+  .ticker-wrap {
+    margin: 32px 0 0;
+    padding: 12px 18px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.025);
+    backdrop-filter: blur(8px);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--cyan);
+    display: flex; align-items: center; gap: 10px;
+    overflow: hidden;
+  }
+  .ticker-wrap .prompt { color: var(--purple); flex-shrink: 0; }
+  .ticker-text { white-space: nowrap; animation: ticker 18s linear infinite; }
+  @keyframes ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .cursor {
+    display: inline-block; width: 8px; height: 14px;
+    background: var(--cyan); margin-left: 2px;
+    animation: blink 1s step-start infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── SECTION ── */
+  section {
+    margin-top: 56px;
+    animation: fadeUp .6s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  section:nth-child(2)  { animation-delay: .05s; }
+  section:nth-child(3)  { animation-delay: .10s; }
+  section:nth-child(4)  { animation-delay: .15s; }
+  section:nth-child(5)  { animation-delay: .20s; }
+  section:nth-child(6)  { animation-delay: .25s; }
+  section:nth-child(7)  { animation-delay: .30s; }
+
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sec-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--purple), transparent);
+  }
+
+  /* ── PROFILE ── */
+  .profile-box {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    background: var(--card);
+    font-size: 14.5px;
+    color: #c0c4db;
+    line-height: 1.8;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--purple), var(--cyan));
+    border-radius: 4px 0 0 4px;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .skill-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: var(--card);
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .skill-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(175,144,244,0.15);
+  }
+  .skill-title {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(175,144,244,0.09);
+    color: #b0b8d8;
+    border: 1px solid rgba(175,144,244,0.12);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 0 22px;
+    margin-bottom: 36px;
+  }
+  .exp-line {
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--purple) 0%, var(--cyan) 100%);
+    position: relative;
+  }
+  .exp-line::before {
+    content: '';
+    position: absolute; top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--purple);
+    box-shadow: 0 0 12px var(--purple);
+  }
+  .exp-body {}
+  .exp-role {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .exp-org {
+    font-size: 13px;
+    color: var(--cyan);
+    margin-top: 2px;
+  }
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+  .exp-body ul {
+    padding-left: 0;
+    list-style: none;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .exp-body li {
+    font-size: 13.5px;
+    color: #b0b5cc;
+    padding-left: 16px;
+    position: relative;
+  }
+  .exp-body li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--purple);
+    font-size: 11px;
+    top: 2px;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+    background: var(--card);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+  .edu-deg {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .edu-uni {
+    font-size: 13px;
+    color: var(--cyan);
+    margin-top: 4px;
+  }
+  .edu-courses {
+    margin-top: 14px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .edu-course {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: rgba(99,232,255,0.06);
+    color: #8ad4e8;
+    border: 1px solid rgba(99,232,255,0.12);
+  }
+  .edu-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* ── PROJECTS ── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 16px;
+  }
+  .proj-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+    transition: border-color .25s, box-shadow .25s, transform .25s;
+  }
+  .proj-card:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 10px 40px rgba(99,232,255,0.12);
+    transform: translateY(-4px);
+  }
+  .proj-card::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle at top right, rgba(175,144,244,0.15), transparent 70%);
+  }
+  .proj-name {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .proj-stack {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    margin-bottom: 14px;
+  }
+  .proj-tech {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(175,144,244,0.1);
+    color: var(--purple);
+    border: 1px solid rgba(175,144,244,0.2);
+  }
+  .proj-card ul {
+    list-style: none;
+    padding: 0;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .proj-card li {
+    font-size: 12.5px;
+    color: #9ea5c0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .proj-card li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--cyan);
+    font-size: 11px;
+  }
+
+  /* ── LANGUAGES ── */
+  .lang-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .lang-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 22px;
+    background: var(--card);
+    text-align: center;
+    min-width: 130px;
+  }
+  .lang-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+  }
+  .lang-level {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .lang-dots {
+    display: flex; gap: 5px; justify-content: center;
+    margin-top: 10px;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border);
+  }
+  .dot.on { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  footer span { color: var(--purple); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { grid-template-columns: 1fr; }
+    .contact-bar { align-items: flex-start; margin-top: 16px; }
+    .edu-card { grid-template-columns: 1fr; }
+    footer { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="wrap">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div>
+      <div class="tag">Computer Engineering · BZU Multan</div>
+      <h1>Hania Amjad</h1>
+      <div class="headline">Computer Engineering Student</div>
+      <div class="badge-row">
+        <span class="badge lit">AWS Cloud</span>
+        <span class="badge lit">C# / .NET</span>
+        <span class="badge lit">Flutter</span>
+        <span class="badge">SQL Server</span>
+        <span class="badge">DSA</span>
+        <span class="badge">MATLAB</span>
+        <span class="badge">Arduino</span>
+      </div>
+    </div>
+    <div class="contact-bar">
+      <span>📍 Multan, Pakistan</span>
+      <a href="mailto:haniaamjad1025@gmail.com">haniaamjad1025@gmail.com</a> 
+      <span>🇵🇰 Pakistani</span>
+    </div>
+  </header>
+
+  <!-- ── TERMINAL TICKER ── -->
+  <div class="ticker-wrap">
+    <span class="prompt">hania@aws:~$</span>
+    <span class="ticker-text">
+      ./run portfolio.sh &nbsp;|&nbsp; status: ACTIVE &nbsp;|&nbsp;
+      cloud_role: Senior Media Coordinator &nbsp;|&nbsp;
+      semester: 4th CPE &nbsp;|&nbsp;
+      building: full-stack + cloud + embedded &nbsp;|&nbsp;
+      open_to: internships · cloud roles · dev opportunities &nbsp;|&nbsp;
+      ./run portfolio.sh &nbsp;|&nbsp; status: ACTIVE &nbsp;|&nbsp;
+      cloud_role: Senior Media Coordinator &nbsp;|&nbsp;
+      semester: 4th CPE &nbsp;|&nbsp;
+      building: full-stack + cloud + embedded &nbsp;|&nbsp;
+      open_to: internships · cloud roles · dev opportunities &nbsp;|&nbsp;
+    </span>
+    <span class="cursor"></span>
+  </div>
+
+  <!-- ── PROFILE ── -->
+  <section>
+    <div class="sec-label">profile</div>
+    <div class="profile-box">
+      Analytical Computer Engineering student and active AWS cloud community member with foundational knowledge in AWS cloud services, architecture design, and structured programming. Proven technical aptitude through full-stack data solutions including an enterprise-level medical store inventory management system with SQL Server integration. Skilled in OOP with C#/.NET, cross-platform UI with Flutter, and data structures. Bringing hands-on database experience and strategic technical leadership from the AWS Student Builders Group into impactful engineering roles.
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section>
+    <div class="sec-label">areas of expertise</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-title">☁ Cloud Computing</div>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS Ecosystem</span>
+          <span class="skill-tag">Cloud Fundamentals</span>
+          <span class="skill-tag">AWS RDS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-title">🗄 Database</div>
+        <div class="skill-tags">
+          <span class="skill-tag">SQL Server</span>
+          <span class="skill-tag">Relational DB Design</span>
+          <span class="skill-tag">Data Mapping</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-title">⚙ Software Eng.</div>
+        <div class="skill-tags">
+          <span class="skill-tag">C# / .NET</span>
+          <span class="skill-tag">OOP</span>
+          <span class="skill-tag">C Language</span>
+          <span class="skill-tag">WinForms</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-title">📊 DSA</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Data Structures</span>
+          <span class="skill-tag">Algorithm Optimization</span>
+          <span class="skill-tag">Big O</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-title">📱 Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">Mobile UI</span>
+          <span class="skill-tag">Responsive Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-title">🎨 Soft Skills</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Team Leadership</span>
+          <span class="skill-tag">Media Strategy</span>
+          <span class="skill-tag">Canva</span>
+          <span class="skill-tag">Content Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section>
+    <div class="sec-label">professional experience</div>
+
+    <div class="exp-item">
+      <div class="exp-line"></div>
+      <div class="exp-body">
+        <div class="exp-role">Senior Media Coordinator &amp; Associate Team Member</div>
+        <div class="exp-org">AWS Student Builders Group — BZU</div>
+        <div class="exp-date">Mar 2026 → Present · Multan, Pakistan</div>
+        <ul>
+          <li>Spearheaded visual brand identity transition and digital presence, designing high-impact cloud-marketing assets in Canva that scaled workshop registrations.</li>
+          <li>Collaborated with the regional core committee to scope future tech events, aligning community bootcamps with industry-standard AWS service tracks.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-line"></div>
+      <div class="exp-body">
+        <div class="exp-role">Regional Core Team Member &amp; Media Lead</div>
+        <div class="exp-org">Devsinc × Multan</div>
+        <div class="exp-date">May 2025 → May 2026 · Multan, Pakistan</div>
+        <ul>
+          <li>Served as central community organizer, producing and editing technical video content to maximize marketing outreach for local developer meetups.</li>
+         
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section>
+    <div class="sec-label">education</div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-deg">BSc Computer Engineering</div>
+        <div class="edu-uni">Bahauddin Zakariya University, Multan, Pakistan</div>
+        <div class="edu-courses">
+          <span class="edu-course">DSA</span>
+          <span class="edu-course">Database Management Systems</span>
+          <span class="edu-course">Cloud Foundations</span>
+          <span class="edu-course">Signals &amp; Systems</span>
+          <span class="edu-course">Microprocessor &amp; Assembly</span>
+          <span class="edu-course">OOP</span>
+        </div>
+      </div>
+      <div class="edu-date">Aug 2024 → Jun 2028<br/>(Expected)</div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section>
+    <div class="sec-label">projects</div>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-name">🏪 Medical Store Inventory System</div>
+        <div class="proj-stack">
+          <span class="proj-tech">C# / .NET</span>
+          <span class="proj-tech">WinForms</span>
+          <span class="proj-tech">SQL Server</span>
+          <span class="proj-tech">Relational DB</span>
+        </div>
+        <ul>
+          <li>Engineered desktop inventory system for real-time pharmaceutical tracking.</li>
+          <li>Designed optimized SQL Server relational database with high-availability layout.</li>
+          <li>Automated monthly sales reconciliation and low-stock alerts with cloud-migration compatibility (AWS RDS / Azure SQL).</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-name">🚗 Smart Car Parking System</div>
+        <div class="proj-stack">
+          <span class="proj-tech">Arduino</span>
+          <span class="proj-tech">Embedded C</span>
+          <span class="proj-tech">DSA</span>
+        </div>
+        <ul>
+          <li>Built hardware-software prototype with array-based Linear Search for real-time vehicle coordinate mapping.</li>
+          <li>Served as Project Team Lead — oversaw architecture, delegation, and troubleshooting for optimal logic runtime.</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-name">🛠 Engineering &amp; UI Portfolio</div>
+        <div class="proj-stack">
+          <span class="proj-tech">Flutter</span>
+          <span class="proj-tech">MATLAB</span>
+          <span class="proj-tech">C File Handling</span>
+          <span class="proj-tech">Assembly</span>
+        </div>
+        <ul>
+          <li>Built cross-platform mobile UI prototypes with Flutter.</li>
+          <li>Developed MATLAB scripts for frequency spectrum mapping, signal transformations, and noise filtering.</li>
+          <li>Programmed console-based Bank Management System (C) and a low-level text editor (Assembly).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── LANGUAGES ── -->
+  <section>
+    <div class="sec-label">languages</div>
+    <div class="lang-row">
+      <div class="lang-card">
+        <div class="lang-name">English</div>
+        <div class="lang-level">Professional Working</div>
+        <div class="lang-dots">
+          <span class="dot on"></span><span class="dot on"></span>
+          <span class="dot on"></span><span class="dot on"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-name">Urdu</div>
+        <div class="lang-level">Native / Fluent</div>
+        <div class="lang-dots">
+          <span class="dot on"></span><span class="dot on"></span>
+          <span class="dot on"></span><span class="dot on"></span>
+          <span class="dot on"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>hania<span>@aws</span>:~$ status → open_to_opportunities</span>
+    <span>📍 Multan · haniaamjad1025@gmail.com</span>
+  </footer>
+
+</div>
+</body>
+</html>
