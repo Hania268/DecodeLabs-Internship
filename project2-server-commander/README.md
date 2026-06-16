@@ -3,7 +3,7 @@
 Launched an EC2 instance on AWS, connected via SSH, installed
 Nginx web server, and hosted a custom webpage.
 ## Tools Used
-- AWS EC2 (Amazon Linux 2023, t2.micro)
+- AWS EC2 (Amazon Linux 2023, t3.micro)
 - SSH Terminal
 - Nginx Web Server
 ## Steps Completed
